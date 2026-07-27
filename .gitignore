@@ -1,0 +1,9 @@
+# --- leetcode-daily: 절대 커밋 금지 (자격증명) ---
+session
+login.cjs
+browser-profile/
+*.cookie
+# --- 캐시 ---
+__pycache__/
+*.pyc
+.DS_Store

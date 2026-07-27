@@ -1,0 +1,255 @@
+{
+  "_comment": "패턴별 문제 은행. difficulty는 LeetCode 공식 난이도. composes는 Hard가 어떤 패턴들의 합성인지 표기 — 힌트 H2를 만들 때 참고.",
+  "order": [
+    "sliding-window", "two-pointers", "binary-search", "prefix-sum",
+    "monotonic-stack", "monotonic-deque", "heap", "intervals",
+    "graph-traversal", "topological-sort", "union-find", "shortest-path",
+    "backtracking", "dp-linear", "dp-grid", "dp-interval", "tree", "trie",
+    "greedy", "bit-index-tree", "design"
+  ],
+  "patterns": {
+    "sliding-window": {
+      "ko": "슬라이딩 윈도우",
+      "signals": ["연속된 부분배열/부분문자열", "최대 k개까지 허용", "가장 긴/짧은 구간", "정렬하면 안 되는 순서 의존"],
+      "problems": [
+        {"id": 3, "title": "Longest Substring Without Repeating Characters", "difficulty": "medium"},
+        {"id": 424, "title": "Longest Repeating Character Replacement", "difficulty": "medium"},
+        {"id": 567, "title": "Permutation in String", "difficulty": "medium"},
+        {"id": 1004, "title": "Max Consecutive Ones III", "difficulty": "medium"},
+        {"id": 76, "title": "Minimum Window Substring", "difficulty": "hard", "composes": ["sliding-window", "hashmap-counting"]},
+        {"id": 992, "title": "Subarrays with K Different Integers", "difficulty": "hard", "composes": ["sliding-window", "atmost-trick"]},
+        {"id": 239, "title": "Sliding Window Maximum", "difficulty": "hard", "composes": ["sliding-window", "monotonic-deque"]}
+      ]
+    },
+    "two-pointers": {
+      "ko": "투 포인터",
+      "signals": ["정렬된 배열", "쌍/삼중쌍 찾기", "양 끝에서 좁혀오기", "면적/용량 최대화"],
+      "problems": [
+        {"id": 11, "title": "Container With Most Water", "difficulty": "medium"},
+        {"id": 15, "title": "3Sum", "difficulty": "medium"},
+        {"id": 16, "title": "3Sum Closest", "difficulty": "medium"},
+        {"id": 42, "title": "Trapping Rain Water", "difficulty": "hard", "composes": ["two-pointers", "prefix-max"]}
+      ]
+    },
+    "binary-search": {
+      "ko": "이분 탐색 (배열 + 답에 대한 탐색)",
+      "signals": ["정렬됨 또는 단조성", "최소의 최대 / 최대의 최소", "k번째", "log 복잡도를 요구하는 제약", "회전된 정렬 배열"],
+      "problems": [
+        {"id": 33, "title": "Search in Rotated Sorted Array", "difficulty": "medium"},
+        {"id": 153, "title": "Find Minimum in Rotated Sorted Array", "difficulty": "medium"},
+        {"id": 875, "title": "Koko Eating Bananas", "difficulty": "medium"},
+        {"id": 1011, "title": "Capacity To Ship Packages Within D Days", "difficulty": "medium"},
+        {"id": 162, "title": "Find Peak Element", "difficulty": "medium"},
+        {"id": 410, "title": "Split Array Largest Sum", "difficulty": "hard", "composes": ["binary-search-on-answer", "greedy-feasibility"]},
+        {"id": 4, "title": "Median of Two Sorted Arrays", "difficulty": "hard", "composes": ["binary-search", "partition-invariant"]},
+        {"id": 719, "title": "Find K-th Smallest Pair Distance", "difficulty": "hard", "composes": ["binary-search-on-answer", "two-pointers"]}
+      ]
+    },
+    "prefix-sum": {
+      "ko": "누적합 + 해시맵",
+      "signals": ["부분배열의 합이 정확히 k", "나머지가 같은 두 지점", "구간 합 질의 반복", "0과 1의 개수가 같은 구간"],
+      "problems": [
+        {"id": 560, "title": "Subarray Sum Equals K", "difficulty": "medium"},
+        {"id": 525, "title": "Contiguous Array", "difficulty": "medium"},
+        {"id": 974, "title": "Subarray Sums Divisible by K", "difficulty": "medium"},
+        {"id": 1074, "title": "Number of Submatrices That Sum to Target", "difficulty": "hard", "composes": ["prefix-sum", "dimension-reduction"]},
+        {"id": 862, "title": "Shortest Subarray with Sum at Least K", "difficulty": "hard", "composes": ["prefix-sum", "monotonic-deque"]}
+      ]
+    },
+    "monotonic-stack": {
+      "ko": "단조 스택",
+      "signals": ["다음으로 큰/작은 원소", "히스토그램 넓이", "온도/주가처럼 기다린 일수", "왼쪽·오른쪽 경계를 동시에 알아야 함"],
+      "problems": [
+        {"id": 739, "title": "Daily Temperatures", "difficulty": "medium"},
+        {"id": 901, "title": "Online Stock Span", "difficulty": "medium"},
+        {"id": 853, "title": "Car Fleet", "difficulty": "medium"},
+        {"id": 84, "title": "Largest Rectangle in Histogram", "difficulty": "hard", "composes": ["monotonic-stack", "boundary-expansion"]},
+        {"id": 85, "title": "Maximal Rectangle", "difficulty": "hard", "composes": ["monotonic-stack", "row-wise-reduction"]}
+      ]
+    },
+    "monotonic-deque": {
+      "ko": "단조 덱",
+      "signals": ["윈도우 내 최대/최소를 O(1)로", "슬라이딩 윈도우인데 max가 필요", "DP 전이에서 구간 최댓값"],
+      "problems": [
+        {"id": 1696, "title": "Jump Game VI", "difficulty": "medium", "composes": ["dp-linear", "monotonic-deque"]},
+        {"id": 239, "title": "Sliding Window Maximum", "difficulty": "hard", "composes": ["sliding-window", "monotonic-deque"]},
+        {"id": 862, "title": "Shortest Subarray with Sum at Least K", "difficulty": "hard", "composes": ["prefix-sum", "monotonic-deque"]}
+      ]
+    },
+    "heap": {
+      "ko": "힙 / 우선순위 큐",
+      "signals": ["k번째로 큰/작은", "가장 빈번한 k개", "스트리밍 중앙값", "매번 최적을 꺼내 쓰는 그리디"],
+      "problems": [
+        {"id": 215, "title": "Kth Largest Element in an Array", "difficulty": "medium"},
+        {"id": 973, "title": "K Closest Points to Origin", "difficulty": "medium"},
+        {"id": 621, "title": "Task Scheduler", "difficulty": "medium"},
+        {"id": 23, "title": "Merge k Sorted Lists", "difficulty": "hard", "composes": ["heap", "k-way-merge"]},
+        {"id": 295, "title": "Find Median from Data Stream", "difficulty": "hard", "composes": ["two-heaps", "invariant-balance"]},
+        {"id": 502, "title": "IPO", "difficulty": "hard", "composes": ["heap", "greedy", "sorting"]}
+      ]
+    },
+    "intervals": {
+      "ko": "구간 처리",
+      "signals": ["[start, end] 배열", "겹치는 구간 병합", "회의실/스케줄", "시작점 정렬 후 스윕"],
+      "problems": [
+        {"id": 56, "title": "Merge Intervals", "difficulty": "medium"},
+        {"id": 57, "title": "Insert Interval", "difficulty": "medium"},
+        {"id": 435, "title": "Non-overlapping Intervals", "difficulty": "medium"},
+        {"id": 1094, "title": "Car Pooling", "difficulty": "medium"},
+        {"id": 218, "title": "The Skyline Problem", "difficulty": "hard", "composes": ["intervals", "heap", "sweep-line"]}
+      ]
+    },
+    "graph-traversal": {
+      "ko": "그래프 BFS / DFS",
+      "signals": ["격자에서 연결 요소", "최단 경로인데 가중치 없음", "상태 공간 탐색", "섬/영역 세기"],
+      "problems": [
+        {"id": 200, "title": "Number of Islands", "difficulty": "medium"},
+        {"id": 994, "title": "Rotting Oranges", "difficulty": "medium"},
+        {"id": 417, "title": "Pacific Atlantic Water Flow", "difficulty": "medium"},
+        {"id": 133, "title": "Clone Graph", "difficulty": "medium"},
+        {"id": 127, "title": "Word Ladder", "difficulty": "hard", "composes": ["bfs", "state-space", "bidirectional-search"]},
+        {"id": 773, "title": "Sliding Puzzle", "difficulty": "hard", "composes": ["bfs", "state-encoding"]},
+        {"id": 329, "title": "Longest Increasing Path in a Matrix", "difficulty": "hard", "composes": ["dfs", "memoization", "implicit-dag"]}
+      ]
+    },
+    "topological-sort": {
+      "ko": "위상 정렬",
+      "signals": ["선수 과목 / 의존 관계", "사이클 존재 여부", "순서를 하나 출력", "DAG"],
+      "problems": [
+        {"id": 207, "title": "Course Schedule", "difficulty": "medium"},
+        {"id": 210, "title": "Course Schedule II", "difficulty": "medium"},
+        {"id": 1203, "title": "Sort Items by Group Respecting Dependencies", "difficulty": "hard", "composes": ["topological-sort", "nested-graphs"]}
+      ]
+    },
+    "union-find": {
+      "ko": "유니온 파인드",
+      "signals": ["연결 요소 개수", "간선을 하나씩 추가하며 병합", "사이클 만드는 간선 찾기", "계정/이메일 병합"],
+      "problems": [
+        {"id": 547, "title": "Number of Provinces", "difficulty": "medium"},
+        {"id": 684, "title": "Redundant Connection", "difficulty": "medium"},
+        {"id": 721, "title": "Accounts Merge", "difficulty": "medium"},
+        {"id": 685, "title": "Redundant Connection II", "difficulty": "hard", "composes": ["union-find", "case-analysis"]},
+        {"id": 803, "title": "Bricks Falling When Hit", "difficulty": "hard", "composes": ["union-find", "reverse-time"]},
+        {"id": 1489, "title": "Find Critical and Pseudo-Critical Edges in MST", "difficulty": "hard", "composes": ["union-find", "kruskal", "edge-perturbation"]}
+      ]
+    },
+    "shortest-path": {
+      "ko": "최단 경로 (다익스트라 계열)",
+      "signals": ["가중 그래프에서 최소 비용", "경유지 k개 제한", "격자에서 최대 높이 최소화", "확률 최대 경로"],
+      "problems": [
+        {"id": 743, "title": "Network Delay Time", "difficulty": "medium"},
+        {"id": 787, "title": "Cheapest Flights Within K Stops", "difficulty": "medium"},
+        {"id": 1631, "title": "Path With Minimum Effort", "difficulty": "medium"},
+        {"id": 778, "title": "Swim in Rising Water", "difficulty": "hard", "composes": ["dijkstra", "binary-search-on-answer", "union-find"]}
+      ]
+    },
+    "backtracking": {
+      "ko": "백트래킹",
+      "signals": ["모든 조합/순열 나열", "n이 아주 작음 (≤ 20)", "격자에서 경로 탐색 후 되돌리기", "제약 만족"],
+      "problems": [
+        {"id": 78, "title": "Subsets", "difficulty": "medium"},
+        {"id": 39, "title": "Combination Sum", "difficulty": "medium"},
+        {"id": 46, "title": "Permutations", "difficulty": "medium"},
+        {"id": 79, "title": "Word Search", "difficulty": "medium"},
+        {"id": 51, "title": "N-Queens", "difficulty": "hard", "composes": ["backtracking", "conflict-sets"]},
+        {"id": 37, "title": "Sudoku Solver", "difficulty": "hard", "composes": ["backtracking", "constraint-propagation"]},
+        {"id": 212, "title": "Word Search II", "difficulty": "hard", "composes": ["backtracking", "trie", "pruning"]}
+      ]
+    },
+    "dp-linear": {
+      "ko": "1차원 DP",
+      "signals": ["i번째까지의 최적", "선택하거나 건너뛰거나", "동전/조합 개수", "증가 부분수열"],
+      "problems": [
+        {"id": 198, "title": "House Robber", "difficulty": "medium"},
+        {"id": 213, "title": "House Robber II", "difficulty": "medium"},
+        {"id": 322, "title": "Coin Change", "difficulty": "medium"},
+        {"id": 139, "title": "Word Break", "difficulty": "medium"},
+        {"id": 300, "title": "Longest Increasing Subsequence", "difficulty": "medium"},
+        {"id": 152, "title": "Maximum Product Subarray", "difficulty": "medium"},
+        {"id": 132, "title": "Palindrome Partitioning II", "difficulty": "hard", "composes": ["dp-linear", "palindrome-precompute"]},
+        {"id": 887, "title": "Super Egg Drop", "difficulty": "hard", "composes": ["dp", "state-inversion"]}
+      ]
+    },
+    "dp-grid": {
+      "ko": "2차원 DP (격자 / 두 문자열)",
+      "signals": ["두 문자열 비교", "격자 위 경로", "부분수열 매칭", "편집 연산"],
+      "problems": [
+        {"id": 62, "title": "Unique Paths", "difficulty": "medium"},
+        {"id": 64, "title": "Minimum Path Sum", "difficulty": "medium"},
+        {"id": 1143, "title": "Longest Common Subsequence", "difficulty": "medium"},
+        {"id": 5, "title": "Longest Palindromic Substring", "difficulty": "medium"},
+        {"id": 72, "title": "Edit Distance", "difficulty": "hard", "composes": ["dp-grid", "three-way-transition"]},
+        {"id": 10, "title": "Regular Expression Matching", "difficulty": "hard", "composes": ["dp-grid", "case-analysis"]},
+        {"id": 44, "title": "Wildcard Matching", "difficulty": "hard", "composes": ["dp-grid", "greedy-alternative"]},
+        {"id": 115, "title": "Distinct Subsequences", "difficulty": "hard", "composes": ["dp-grid", "counting"]}
+      ]
+    },
+    "dp-interval": {
+      "ko": "구간 DP",
+      "signals": ["구간을 나누는 지점 선택", "터뜨리는 순서", "양끝에서 좁혀오는 상태", "n ≤ 500 정도의 제약"],
+      "problems": [
+        {"id": 647, "title": "Palindromic Substrings", "difficulty": "medium"},
+        {"id": 1039, "title": "Minimum Score Triangulation of Polygon", "difficulty": "medium"},
+        {"id": 312, "title": "Burst Balloons", "difficulty": "hard", "composes": ["dp-interval", "last-action-trick"]},
+        {"id": 1547, "title": "Minimum Cost to Cut a Stick", "difficulty": "hard", "composes": ["dp-interval", "coordinate-insertion"]},
+        {"id": 546, "title": "Remove Boxes", "difficulty": "hard", "composes": ["dp-interval", "extra-state-dimension"]}
+      ]
+    },
+    "tree": {
+      "ko": "트리 DFS / 재귀",
+      "signals": ["이진 트리", "부모-자식 관계로 값 집계", "경로 합", "직렬화/복원", "LCA"],
+      "problems": [
+        {"id": 105, "title": "Construct Binary Tree from Preorder and Inorder Traversal", "difficulty": "medium"},
+        {"id": 199, "title": "Binary Tree Right Side View", "difficulty": "medium"},
+        {"id": 236, "title": "Lowest Common Ancestor of a Binary Tree", "difficulty": "medium"},
+        {"id": 98, "title": "Validate Binary Search Tree", "difficulty": "medium"},
+        {"id": 124, "title": "Binary Tree Maximum Path Sum", "difficulty": "hard", "composes": ["tree-dfs", "return-vs-answer-split"]},
+        {"id": 297, "title": "Serialize and Deserialize Binary Tree", "difficulty": "hard", "composes": ["tree-dfs", "encoding"]},
+        {"id": 968, "title": "Binary Tree Cameras", "difficulty": "hard", "composes": ["tree-dp", "greedy", "state-enum"]}
+      ]
+    },
+    "trie": {
+      "ko": "트라이",
+      "signals": ["접두사 검색", "단어 사전 다수 조회", "와일드카드 포함 검색", "XOR 최대화"],
+      "problems": [
+        {"id": 208, "title": "Implement Trie (Prefix Tree)", "difficulty": "medium"},
+        {"id": 211, "title": "Design Add and Search Words Data Structure", "difficulty": "medium"},
+        {"id": 421, "title": "Maximum XOR of Two Numbers in an Array", "difficulty": "medium"},
+        {"id": 212, "title": "Word Search II", "difficulty": "hard", "composes": ["backtracking", "trie", "pruning"]},
+        {"id": 745, "title": "Prefix and Suffix Search", "difficulty": "hard", "composes": ["trie", "key-composition"]}
+      ]
+    },
+    "greedy": {
+      "ko": "그리디 (+ 교환 논증)",
+      "signals": ["국소 최적이 전역 최적임을 증명 가능", "도달 가능성", "최소 개수로 덮기", "정렬 후 한 번 훑기"],
+      "problems": [
+        {"id": 55, "title": "Jump Game", "difficulty": "medium"},
+        {"id": 45, "title": "Jump Game II", "difficulty": "medium"},
+        {"id": 763, "title": "Partition Labels", "difficulty": "medium"},
+        {"id": 135, "title": "Candy", "difficulty": "hard", "composes": ["greedy", "two-pass"]},
+        {"id": 871, "title": "Minimum Number of Refueling Stops", "difficulty": "hard", "composes": ["greedy", "heap", "regret-swap"]},
+        {"id": 630, "title": "Course Schedule III", "difficulty": "hard", "composes": ["greedy", "heap", "regret-swap"]}
+      ]
+    },
+    "bit-index-tree": {
+      "ko": "펜윅 트리 / 세그먼트 트리",
+      "signals": ["역순 쌍 세기", "동적으로 갱신되는 구간 합", "나보다 작은 원소의 개수", "n log n이 필요한 카운팅"],
+      "problems": [
+        {"id": 307, "title": "Range Sum Query - Mutable", "difficulty": "medium"},
+        {"id": 315, "title": "Count of Smaller Numbers After Self", "difficulty": "hard", "composes": ["bit", "coordinate-compression", "merge-sort-alt"]},
+        {"id": 493, "title": "Reverse Pairs", "difficulty": "hard", "composes": ["bit", "merge-sort"]},
+        {"id": 327, "title": "Count of Range Sum", "difficulty": "hard", "composes": ["prefix-sum", "bit", "merge-sort"]}
+      ]
+    },
+    "design": {
+      "ko": "자료구조 설계",
+      "signals": ["O(1)로 모든 연산", "LRU/LFU", "삽입·삭제·랜덤 동시에", "해시맵 + 연결리스트 조합"],
+      "problems": [
+        {"id": 146, "title": "LRU Cache", "difficulty": "medium"},
+        {"id": 380, "title": "Insert Delete GetRandom O(1)", "difficulty": "medium"},
+        {"id": 460, "title": "LFU Cache", "difficulty": "hard", "composes": ["design", "nested-buckets"]},
+        {"id": 432, "title": "All O`one Data Structure", "difficulty": "hard", "composes": ["design", "doubly-linked-buckets"]}
+      ]
+    }
+  }
+}

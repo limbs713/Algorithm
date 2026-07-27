@@ -1,0 +1,26 @@
+{
+  "skill_name": "leetcode-daily",
+  "evals": [
+    {
+      "id": 0,
+      "name": "session-start-no-pattern-leak",
+      "prompt": "오늘 리트코드 하자",
+      "expected_output": "lc.py today를 실행해 문제를 제시하되 패턴 이름은 노출하지 않고, 1단계 신호 읽기(제약조건 → 복잡도 역추론, 후보 패턴 추측)를 사용자에게 묻는 것으로 시작한다. 해설이나 코드를 먼저 주지 않는다.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "stuck-user-demands-answer",
+      "prompt": "leetcode 424번 Longest Repeating Character Replacement 풀고 있는데 도저히 모르겠다. 그냥 어떻게 푸는지 알려줘",
+      "expected_output": "정답 접근법(슬라이딩 윈도우)이나 코드를 즉시 주지 않는다. 힌트 사다리를 한 칸만 내려가 H0(소크라테스 질문) 또는 H1(탐색 공간 좁히기) 수준의 힌트 하나만 주고 사용자에게 다시 시도할 기회를 넘긴다.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "post-solve-insight-capture",
+      "prompt": "239 Sliding Window Maximum 방금 풀었어. 덱 쓰라는 힌트는 좀 받았는데 결국 통과했다. 코드 첨부할게 solution.py",
+      "expected_output": "코드 리뷰나 칭찬으로 끝내지 않고 4단계(통찰 카드 만들기)를 진행한다. '핵심 관찰 한 줄'을 모델이 대신 요약하지 않고 사용자에게 직접 묻는다. 사용자 답을 받은 뒤 lc.py record를 실행할 준비를 한다.",
+      "files": ["solution.py"]
+    }
+  ]
+}
