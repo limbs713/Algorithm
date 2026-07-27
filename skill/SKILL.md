@@ -201,6 +201,25 @@ python3 ~/.claude/skills/leetcode-daily/scripts/lc.py record \
 
 `--hint`는 최종적으로 도달한 힌트 레벨이다. 이게 다음 복습 간격을 결정하므로 정직하게 기록한다. `--file`은 사용자가 짠 코드의 경로로, 3주 뒤 복습 때 본인이 짠 코드를 다시 꺼내볼 수 있게 해준다.
 
+### 5단계 — 아카이브 동기화 (자동)
+
+기록 직후 **반드시** 원격 아카이브에 누적한다. 사용자는 공부 흔적이 원격에 쌓이는 것 자체를 목적으로 하므로, 물어보지 말고 실행한다:
+
+```bash
+python3 ~/.claude/skills/leetcode-daily/scripts/lc.py sync \
+  --message "train: #3 Longest Substring Without Repeating Characters (H1)"
+```
+
+`sync`가 하는 일 — 풀이 파일을 `solutions/`로, 진도·통찰을 레포 루트로 복사하고, README의 `LEETCODE-DAILY` 마커 블록(대시보드)을 갱신한 뒤 커밋·푸시한다. **복습만 한 날에도** `review` 뒤에 똑같이 부른다.
+
+주의할 점 셋:
+
+- **자격증명은 절대 올라가지 않는다.** `session`·`login.cjs`·`browser-profile/`은 `.gitignore`로 차단되어 있다. 이 차단을 푸는 변경은 어떤 이유로도 하지 않는다 — 공개 레포에 세션 쿠키가 올라가면 계정이 그대로 넘어가고, 삭제해도 캐시·포크에 남는다.
+- **README의 다른 구간은 건드리지 않는다.** BaekjoonHub·LeetHub 확장이 `<!---LeetCode Topics Start-->` 구간을 자동 관리하므로, `sync`는 자기 마커 안쪽만 갈아끼운다.
+- **푸시 실패는 세션을 멈출 이유가 아니다.** 커밋은 로컬에 남으므로 사용자에게 알리고 넘어간다. 다음 `sync`에서 함께 올라간다.
+
+기본 레포 경로는 `~/Algorithm`이며, `LC_ARCHIVE_REPO` 환경변수로 바꿀 수 있다.
+
 ---
 
 ## 복습 세션 (카드당 2분)
@@ -219,6 +238,8 @@ python3 ~/.claude/skills/leetcode-daily/scripts/lc.py review --id 424 --hint H1
 ```
 
 백지였던 카드는 간격이 1일로 리셋되어 내일 다시 나온다. 이게 약점이 반복 노출되는 메커니즘이다.
+
+복습이 끝나면 신규 문제와 마찬가지로 `lc.py sync`를 불러 아카이브에 반영한다 (5단계 참조).
 
 회상에 실패한 뒤 사용자가 "그때 어떻게 짰더라"라고 하면 `lc.py card --id <번호>`에 찍히는 연습 파일을 `code`로 열어 준다. 남의 해설보다 3주 전 자기 코드가 훨씬 빨리 기억을 되살린다. 다만 **회상을 시도하기 전에 먼저 열어주지는 않는다** — 그러면 복습이 아니라 그냥 읽기가 된다.
 
