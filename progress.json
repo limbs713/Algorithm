@@ -21,6 +21,26 @@
       "interval_days": 3,
       "next_review": "2026-07-30",
       "lapses": 0
+    },
+    "11": {
+      "title": "Container With Most Water",
+      "pattern": "two-pointers",
+      "difficulty": "medium",
+      "insight": "천장보다 크면 추가분은 버려진다",
+      "signal": "~의 최댓값을 구하시오 → 최댓값을 구하기 전에 그 값을 구하는 수식이 뭔지 먼저 정하고, 식의 각 항이 언제 최대가 되는지 본다",
+      "file": "solutions/0011_container-with-most-water.py",
+      "history": [
+        {
+          "date": "2026-07-28",
+          "hint": "H3",
+          "minutes": 35,
+          "solved": true,
+          "kind": "new"
+        }
+      ],
+      "interval_days": 2,
+      "next_review": "2026-07-30",
+      "lapses": 0
     }
   }
 }
