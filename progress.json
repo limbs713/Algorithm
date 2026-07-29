@@ -41,6 +41,26 @@
       "interval_days": 2,
       "next_review": "2026-07-30",
       "lapses": 0
+    },
+    "33": {
+      "title": "Search in Rotated Sorted Array",
+      "pattern": "binary-search",
+      "difficulty": "medium",
+      "insight": "정렬 배열을 실제로 만들거나 O(n)으로 옮기지 않고, 논리 인덱스(0~n-1)로 이진 탐색을 돌리되 값을 읽는 순간에만 (mid-k)%n으로 실제 위치를 계산한다. 비교하는 값과 이동 판단이 같은 자리를 봐야 한다.",
+      "signal": "어쨌든 정렬된 배열이면 반드시 이진 탐색이 가능하다. 틀어진 배열을 원복하는 키(회전량)를 O(log n)으로 구하는 것이 핵심.",
+      "file": "solutions/0033_search-in-rotated-sorted-array.py",
+      "history": [
+        {
+          "date": "2026-07-29",
+          "hint": "H4",
+          "minutes": 40,
+          "solved": true,
+          "kind": "new"
+        }
+      ],
+      "interval_days": 1,
+      "next_review": "2026-07-30",
+      "lapses": 0
     }
   }
 }

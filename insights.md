@@ -14,3 +14,9 @@
 - 신호: ~의 최댓값을 구하시오 → 최댓값을 구하기 전에 그 값을 구하는 수식이 뭔지 먼저 정하고, 식의 각 항이 언제 최대가 되는지 본다
 - 내 코드: `solutions/0011_container-with-most-water.py`
 
+## #33 Search in Rotated Sorted Array [medium] · binary-search
+- 기록일: 2026-07-29 (힌트 H4)
+- **통찰**: 정렬 배열을 실제로 만들거나 O(n)으로 옮기지 않고, 논리 인덱스(0~n-1)로 이진 탐색을 돌리되 값을 읽는 순간에만 (mid-k)%n으로 실제 위치를 계산한다. 비교하는 값과 이동 판단이 같은 자리를 봐야 한다.
+- 신호: 어쨌든 정렬된 배열이면 반드시 이진 탐색이 가능하다. 틀어진 배열을 원복하는 키(회전량)를 O(log n)으로 구하는 것이 핵심.
+- 내 코드: `solutions/0033_search-in-rotated-sorted-array.py`
+
