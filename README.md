@@ -9,7 +9,7 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 
 | 푼 문제 | 해결 | 복습 횟수 | 누적 시간 | 갱신 |
 | --- | --- | --- | --- | --- |
-| 2 | 2 | 0 | 50분 | 2026-07-28 |
+| 2 | 2 | 0 | 50분 | 2026-07-29 |
 
 ### 통찰 카드
 

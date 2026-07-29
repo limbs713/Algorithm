@@ -6,6 +6,7 @@
   lc.py review --id 424 ...   복습 결과 기록 (간격 갱신)
   lc.py stats                 패턴별 숙련도
   lc.py card --id 424         저장된 카드 원문 보기
+  lc.py pull                  아카이브 레포에서 진도·통찰·풀이를 받아 로컬에 병합
   lc.py sync                  공부 흔적을 아카이브 레포에 커밋·푸시
 
 표준 라이브러리만 사용한다.
@@ -14,6 +15,7 @@
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -500,6 +502,163 @@ def update_readme(block):
     path.write_text(text, encoding="utf-8")
 
 
+# ---------------------------------------------------------------- 아카이브 → 로컬
+
+def _local_path(repo_file):
+    """레포 상대 경로를 로컬 연습 파일 경로로 되돌린다. _repo_path의 역방향."""
+    if not repo_file:
+        return ""
+    p = Path(repo_file)
+    return str(p) if p.is_absolute() else str(PRACTICE_DIR / p.name)
+
+
+def _last_touch(rec):
+    """이 기록이 마지막으로 갱신된 날짜. 어느 쪽이 최신인지 판단하는 기준."""
+    dates = [h.get("date", "") for h in rec.get("history", [])]
+    return max(dates) if dates else ""
+
+
+def git_pull():
+    """원격을 받아온다. 실패해도 훈련은 로컬 진도로 계속하므로 예외를 던지지 않는다."""
+    dirty = _run(["git", "status", "--porcelain"]).stdout.strip()
+    if dirty:
+        _run(["git", "fetch", "origin"])
+        return False, ("로컬에 커밋되지 않은 변경이 있어 pull을 건너뜁니다 "
+                       "(fetch만 완료). 세션 끝의 sync가 함께 올립니다.")
+    branch = _run(["git", "rev-parse", "--abbrev-ref", "HEAD"]).stdout.strip() or "HEAD"
+    r = _run(["git", "pull", "--ff-only", "origin", branch])
+    if r.returncode != 0:
+        return False, f"pull 실패 — 로컬 진도로 진행합니다.\n{r.stderr.strip()}"
+    return True, r.stdout.strip().splitlines()[-1] if r.stdout.strip() else "최신 상태"
+
+
+def merge_progress(local, remote):
+    """원격 진도를 로컬에 병합한다.
+
+    문제별로 이력이 더 많은 쪽을, 같으면 더 최근에 갱신된 쪽을 채택한다.
+    한쪽을 통째로 덮어쓰지 않는 이유는 두 기기에서 서로 다른 문제를 푼 경우가
+    정상 시나리오이기 때문이다.
+    """
+    out = json.loads(json.dumps(local))
+    lp = out.setdefault("problems", {})
+    added, updated = [], []
+
+    for pid, rrec in remote.get("problems", {}).items():
+        rrec = json.loads(json.dumps(rrec))
+        rrec["file"] = _local_path(rrec.get("file", ""))
+        lrec = lp.get(pid)
+        if lrec is None:
+            lp[pid] = rrec
+            added.append(pid)
+            continue
+        lkey = (len(lrec.get("history", [])), _last_touch(lrec))
+        rkey = (len(rrec.get("history", [])), _last_touch(rrec))
+        if rkey > lkey:
+            if lrec.get("file") and not rrec.get("file"):
+                rrec["file"] = lrec["file"]
+            lp[pid] = rrec
+            updated.append(pid)
+
+    rc = remote.get("created", "")
+    if rc and (not out.get("created") or rc < out["created"]):
+        out["created"] = rc
+    return out, added, updated
+
+
+def merge_insights():
+    """로컬에 없는 카드 섹션만 덧붙인다.
+
+    사용자 본인의 문장이 원본이므로 이미 있는 카드는 절대 덮어쓰지 않는다.
+    """
+    src = REPO_DIR / "insights.md"
+    if not src.exists():
+        return 0
+    text = src.read_text(encoding="utf-8")
+    text = text.replace("`solutions/", "`" + str(PRACTICE_DIR) + "/")
+    text = text.replace("~/", str(Path.home()) + "/")
+
+    have = INSIGHTS_PATH.read_text(encoding="utf-8") if INSIGHTS_PATH.exists() else ""
+    existing = set(re.findall(r"(?m)^## #(\d+)", have))
+
+    add = []
+    for chunk in re.split(r"(?m)^(?=## #)", text):
+        m = re.match(r"## #(\d+)", chunk)
+        if m and m.group(1) not in existing:
+            add.append(chunk.rstrip() + "\n\n")
+    if not add:
+        return 0
+
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if not have:
+        INSIGHTS_PATH.write_text(
+            "# 통찰 카드\n\n사용자 본인의 말로 기록된 것만 담는다. "
+            "모델이 요약해 넣지 않는다.\n\n" + "".join(add), encoding="utf-8")
+    else:
+        with open(INSIGHTS_PATH, "a", encoding="utf-8") as f:
+            if not have.endswith("\n"):
+                f.write("\n")
+            f.write("".join(add))
+    return len(add)
+
+
+def restore_solutions():
+    """레포의 풀이를 연습 디렉토리로 되돌린다.
+
+    로컬에 같은 이름이 있으면 건드리지 않는다 — 지금 작업 중인 파일일 수 있고,
+    덮어쓰면 되돌릴 방법이 없다.
+    """
+    src = REPO_DIR / "solutions"
+    if not src.exists():
+        return 0
+    PRACTICE_DIR.mkdir(parents=True, exist_ok=True)
+    n = 0
+    for f in sorted(src.glob("*.py")):
+        dst = PRACTICE_DIR / f.name
+        if not dst.exists():
+            shutil.copy2(f, dst)
+            n += 1
+    return n
+
+
+def cmd_pull(args):
+    """세션 시작 시 원격 아카이브의 진행 상황을 로컬로 가져온다.
+
+    무슨 일이 있어도 0을 반환한다. 아카이브를 못 받는 건 훈련을 멈출 이유가 아니다.
+    """
+    if not (REPO_DIR / ".git").exists():
+        print(f"아카이브 없음: {REPO_DIR} 는 git 레포가 아닙니다. 로컬 진도로 진행합니다.\n"
+              f"  (git clone <원격주소> {REPO_DIR} 또는 LC_ARCHIVE_REPO 환경변수)")
+        return 0
+
+    if not args.no_fetch:
+        ok, msg = git_pull()
+        print(f"{'pull' if ok else '경고'}: {msg}")
+
+    remote_prog = REPO_DIR / "progress.json"
+    n_add = n_upd = 0
+    if remote_prog.exists():
+        try:
+            remote = json.loads(remote_prog.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as e:
+            print(f"경고: 원격 progress.json 파싱 실패 ({e}). 진도 병합을 건너뜁니다.")
+        else:
+            merged, added, updated = merge_progress(load_progress(), remote)
+            if added or updated:
+                save_progress(merged)
+            n_add, n_upd = len(added), len(updated)
+
+    n_card = merge_insights()
+    n_sol = restore_solutions()
+
+    if n_add or n_upd or n_card or n_sol:
+        print(f"병합: 문제 +{n_add}개 / 갱신 {n_upd}개 / 통찰 카드 +{n_card}장 / 풀이 +{n_sol}개")
+    else:
+        print("병합: 로컬이 이미 최신입니다")
+    return 0
+
+
+# ---------------------------------------------------------------- 로컬 → 아카이브
+
 def cmd_sync(args):
     if not (REPO_DIR / ".git").exists():
         print(f"에러: {REPO_DIR} 가 git 레포가 아닙니다.\n"
@@ -577,6 +736,11 @@ def main():
 
     p = sub.add_parser("stats", help="패턴별 숙련도")
     p.set_defaults(func=cmd_stats)
+
+    p = sub.add_parser("pull", help="아카이브에서 진도·통찰·풀이를 받아 로컬에 병합")
+    p.add_argument("--no-fetch", action="store_true",
+                   help="git pull 없이 이미 받아둔 레포 내용만 병합")
+    p.set_defaults(func=cmd_pull)
 
     p = sub.add_parser("sync", help="공부 흔적을 아카이브 레포에 커밋·푸시")
     p.add_argument("--message", default="", help="커밋 메시지")
