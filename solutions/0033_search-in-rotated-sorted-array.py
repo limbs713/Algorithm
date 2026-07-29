@@ -28,7 +28,7 @@ class Solution:
                     elif nums[mid] > tg:
                         st = mid+1
                     else :
-                        en = mid 
+                        en = mid-1
                 return -1
         k = k_binary_search() 
 

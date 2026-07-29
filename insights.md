@@ -20,3 +20,9 @@
 - 신호: 어쨌든 정렬된 배열이면 반드시 이진 탐색이 가능하다. 틀어진 배열을 원복하는 키(회전량)를 O(log n)으로 구하는 것이 핵심.
 - 내 코드: `solutions/0033_search-in-rotated-sorted-array.py`
 
+## #33 Search in Rotated Sorted Array [medium] · binary-search
+- 기록일: 2026-07-29 (힌트 H4)
+- **통찰**: 경계 찾기 이진 탐색(== 로 답을 확정하는 줄이 없는 경우)은 mid 자신이 답일 수 있으므로 en = mid-1로 버리면 안 되고 en = mid로 후보를 남겨야 한다. 값 찾기는 == 로 확정하니 버려도 안전. 짝 규칙: en=mid는 내림 mid, st=mid는 올림 mid.
+- 신호: 이진 탐색에서 == 비교로 즉시 return하는 줄이 없다면 값 찾기가 아니라 경계 찾기 → mid를 버리지 말 것
+- 내 코드: `solutions/0033_search-in-rotated-sorted-array.py`
+
