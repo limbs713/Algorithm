@@ -16,10 +16,16 @@
           "minutes": 15,
           "solved": true,
           "kind": "new"
+        },
+        {
+          "date": "2026-08-14",
+          "hint": "H3",
+          "solved": true,
+          "kind": "review"
         }
       ],
-      "interval_days": 3,
-      "next_review": "2026-07-30",
+      "interval_days": 4,
+      "next_review": "2026-08-18",
       "lapses": 0
     },
     "11": {
@@ -36,10 +42,16 @@
           "minutes": 35,
           "solved": true,
           "kind": "new"
+        },
+        {
+          "date": "2026-08-14",
+          "hint": "H1",
+          "solved": true,
+          "kind": "review"
         }
       ],
-      "interval_days": 2,
-      "next_review": "2026-07-30",
+      "interval_days": 5,
+      "next_review": "2026-08-19",
       "lapses": 0
     },
     "33": {
@@ -56,10 +68,36 @@
           "minutes": 40,
           "solved": true,
           "kind": "new"
+        },
+        {
+          "date": "2026-08-14",
+          "hint": "H4",
+          "solved": false,
+          "kind": "review"
         }
       ],
       "interval_days": 1,
-      "next_review": "2026-07-30",
+      "next_review": "2026-08-15",
+      "lapses": 1
+    },
+    "560": {
+      "title": "Subarray Sum Equals K",
+      "pattern": "prefix-sum",
+      "difficulty": "medium",
+      "insight": "부분합의 차가 곧 부분배열의 합이므로, prefix - k가 이미 나왔던 횟수만큼 답이다. 조회가 먼저, 자기 등록은 나중(i<=j 보장)",
+      "signal": "연속 부분배열의 합 + 음수 포함(슬라이딩 윈도우 불가) → prefix sum + 해시맵",
+      "file": "solutions/0560_subarray-sum-equals-k.py",
+      "history": [
+        {
+          "date": "2026-08-14",
+          "hint": "H3",
+          "minutes": 30,
+          "solved": true,
+          "kind": "new"
+        }
+      ],
+      "interval_days": 2,
+      "next_review": "2026-08-16",
       "lapses": 0
     }
   }

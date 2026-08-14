@@ -23,3 +23,9 @@
 - **통찰 2**: `==`로 검사하는 게 아니라서 mid도 정답일 수 있고, 그래서 `en = mid`로 남겨야 한다. 짝 규칙 — `en = mid`는 내림 mid, `st = mid`는 올림 mid
 - **신호**: 정렬된 배열이면 어떻게든 이진 탐색이 된다. 틀어진 배열을 원복하는 키(회전량)를 O(log n)으로 구하는 게 핵심
 - 내 코드: `solutions/0033_search-in-rotated-sorted-array.py`
+## #560 Subarray Sum Equals K [medium] · prefix-sum
+- 기록일: 2026-08-14 (힌트 H3)
+- **통찰**: 부분합의 차가 곧 부분배열의 합이므로, prefix - k가 이미 나왔던 횟수만큼 답이다. 조회가 먼저, 자기 등록은 나중(i<=j 보장)
+- 신호: 연속 부분배열의 합 + 음수 포함(슬라이딩 윈도우 불가) → prefix sum + 해시맵
+- 내 코드: `solutions/0560_subarray-sum-equals-k.py`
+
