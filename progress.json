@@ -42,16 +42,10 @@
           "minutes": 35,
           "solved": true,
           "kind": "new"
-        },
-        {
-          "date": "2026-08-14",
-          "hint": "H1",
-          "solved": true,
-          "kind": "review"
         }
       ],
-      "interval_days": 5,
-      "next_review": "2026-08-19",
+      "interval_days": 2,
+      "next_review": "2026-07-30",
       "lapses": 0
     },
     "33": {
@@ -68,17 +62,11 @@
           "minutes": 40,
           "solved": true,
           "kind": "new"
-        },
-        {
-          "date": "2026-08-14",
-          "hint": "H4",
-          "solved": false,
-          "kind": "review"
         }
       ],
       "interval_days": 1,
-      "next_review": "2026-08-15",
-      "lapses": 1
+      "next_review": "2026-07-30",
+      "lapses": 0
     },
     "560": {
       "title": "Subarray Sum Equals K",
