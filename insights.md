@@ -29,3 +29,9 @@
 - 신호: 연속 부분배열의 합 + 음수 포함(슬라이딩 윈도우 불가) → prefix sum + 해시맵
 - 내 코드: `solutions/0560_subarray-sum-equals-k.py`
 
+## #739 Daily Temperatures [medium] · monotonic-stack
+- 기록일: 2026-08-18 (힌트 H1)
+- **통찰**: 스택이 이 로직으로 돌면 top이 항상 가장 작으므로, 한 값은 한 번 들어갔다 한 번 나오면 다시는 안 봐도 된다 — 그래서 while로 연달아 pop해도 전체가 O(n)
+- 신호: 답이 인덱스 거리라 정렬이 불가능 + "이후에 처음으로 나보다 큰 값" → 값을 쌓아뒀다 꺼내는 구조
+- 내 코드: `solutions/0739_daily-temperatures.py`
+
