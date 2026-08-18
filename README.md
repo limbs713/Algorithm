@@ -1,5 +1,16 @@
 # Algorithm
-This is a auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+
+알고리즘 문제 풀이 기록입니다. 지금은 **리트코드 데일리 훈련**이 메인 — 하루 1문제를 직접 풀고,
+그 문제에서 건진 핵심 관찰 한 줄을 간격 반복으로 되살립니다. 많이 푸는 게 목적이 아니라
+**Hard를 봤을 때 접근법이 몇 분 안에 떠오르는 상태**를 만드는 게 목적입니다.
+
+| 경로 | 내용 |
+| --- | --- |
+| [`solutions/`](solutions/) | 리트코드 데일리 풀이 |
+| [`insights.md`](insights.md) | 통찰 카드 — 문제별 핵심 관찰 한 줄 |
+| [`progress.json`](progress.json) | 간격 반복 상태 (힌트 이력·다음 복습일) |
+| [`skill/`](skill/) | 훈련 스킬 사본 — 다른 기기에서 환경 복구용 |
+| [`archive/`](archive/) | 백준 56 · 프로그래머스 56 (2025-02 종료), 초기 리트코드 풀이 2개 |
 
 <!--- LEETCODE-DAILY:START --->
 
@@ -32,25 +43,3 @@ This is a auto push repository for Baekjoon Online Judge created with [BaekjoonH
 | 2026-08-28 | 3 | Longest Substring Without Repeating Characters |
 
 <!--- LEETCODE-DAILY:END --->
-
-<!---LeetCode Topics Start-->
-# LeetCode Topics
-## Array
-|  |
-| ------- |
-| [0011-container-with-most-water](https://github.com/limbs713/Algorithm/tree/master/0011-container-with-most-water) |
-| [0088-merge-sorted-array](https://github.com/limbs713/Algorithm/tree/master/0088-merge-sorted-array) |
-## Two Pointers
-|  |
-| ------- |
-| [0011-container-with-most-water](https://github.com/limbs713/Algorithm/tree/master/0011-container-with-most-water) |
-| [0088-merge-sorted-array](https://github.com/limbs713/Algorithm/tree/master/0088-merge-sorted-array) |
-## Sorting
-|  |
-| ------- |
-| [0088-merge-sorted-array](https://github.com/limbs713/Algorithm/tree/master/0088-merge-sorted-array) |
-## Greedy
-|  |
-| ------- |
-| [0011-container-with-most-water](https://github.com/limbs713/Algorithm/tree/master/0011-container-with-most-water) |
-<!---LeetCode Topics End-->
