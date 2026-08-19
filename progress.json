@@ -54,10 +54,16 @@
           "hint": "H0",
           "solved": true,
           "kind": "review"
+        },
+        {
+          "date": "2026-08-19",
+          "hint": "H1",
+          "solved": true,
+          "kind": "review"
         }
       ],
-      "interval_days": 5,
-      "next_review": "2026-08-19",
+      "interval_days": 12,
+      "next_review": "2026-08-31",
       "lapses": 0
     },
     "33": {
@@ -129,6 +135,26 @@
         }
       ],
       "interval_days": 3,
+      "next_review": "2026-08-21",
+      "lapses": 0
+    },
+    "1696": {
+      "title": "Jump Game VI",
+      "pattern": "monotonic-deque",
+      "difficulty": "medium",
+      "insight": "확정된 dp[j] 하나에 j까지 오는 경로 전체가 접혀 있다. 그래서 dp[i]는 경로가 아니라 dp[i-k]~dp[i-1] 값만 보면 된다",
+      "signal": "이동 폭이 k로 제한된 최대 점수 → DP 식은 바로 구할 수 있지만 O(nk)라 죽는다. 진짜 문제는 한 칸씩 밀리는 구간의 최댓값을 매번 k개 훑지 않고 얻는 것",
+      "file": "solutions/1696_jump-game-vi.py",
+      "history": [
+        {
+          "date": "2026-08-19",
+          "hint": "H3",
+          "minutes": 40,
+          "solved": true,
+          "kind": "new"
+        }
+      ],
+      "interval_days": 2,
       "next_review": "2026-08-21",
       "lapses": 0
     }
